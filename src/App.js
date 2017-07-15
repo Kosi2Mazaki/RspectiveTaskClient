@@ -38,7 +38,7 @@ class App extends Component {
               </Navbar.Brand>
             </Navbar.Header>
             <Nav>
-              <NavItem eventKey={1} href="/home">Home</NavItem>
+              <NavItem eventKey={1} href="/">Home</NavItem>
               <NavItem eventKey={2} href="/user">User</NavItem>
             </Nav>
           </Navbar>
@@ -46,7 +46,7 @@ class App extends Component {
             <Panel footer="Icon made by Freepik from www.flaticon.com ">
               <AppAlert />
               <Route path="/user" component={User} />
-              <Navigator path="/home" component={Home} />
+              <Navigator path="/" component={Home} />
             </Panel>
           </Router>
         </div>

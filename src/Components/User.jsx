@@ -153,7 +153,7 @@ class UserForm extends Component {
                         onClick={() => this.props.onUserLogout()}>
                         Logout
                     </Button>
-                    <p className="extra-padding message">You can now go to the <Link to="/home">Home</Link> page</p>
+                    <p className="extra-padding message">You can now go to the <Link to="/">Home</Link> page</p>
                 </div>
             )
         }
