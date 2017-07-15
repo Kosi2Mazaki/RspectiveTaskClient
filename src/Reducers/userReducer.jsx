@@ -1,5 +1,5 @@
 import * as userActions from '../Actions/userActions'
-import { history, requestProxy } from '../appconfig'
+import { requestProxy } from '../appconfig'
 
 /**
  * Initial state for the user global storage

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Redirect, Route, Link } from 'react-router-dom'
+import React from 'react'
+import { Redirect, Route } from 'react-router-dom'
 import store from '../Reducers/appReducer'
 
 

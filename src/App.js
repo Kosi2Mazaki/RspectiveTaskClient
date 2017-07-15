@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
+import logo from './panda.svg'
 import './App.css'
 import Home from './Components/Home'
 import AppAlert from './Components/AppAlert'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { Grid, Row, Col, Panel } from 'react-bootstrap'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Panel, Navbar, Nav, NavItem } from 'react-bootstrap'
 import store from './Reducers/appReducer'
 import User from './Components/User'
 import * as userActions from './Actions/userActions'
@@ -31,89 +31,26 @@ class App extends Component {
     return (
       <Provider store={store} >
         <div>
-          <Panel>
-            <div className="App">
-              <Grid className="App-header">
-                <Row className="show-grid">
-                  <Col xs={6} md={8} >
-                    <h2>Welcome to RspectiveTaskValidator</h2>
-                  </Col>
-                  <Col xs={2} md={2}>
-                    <img src={logo} className="icon-animation" alt="logo" />
-                  </Col>
-
-                </Row>
-              </Grid >
-            </div>
-          </Panel>
-
-          <div>
-            <Router>
-              <Panel>
-                <AppAlert />
-
-                <Link to="/home">Home</Link>
-                <Link to="/user">User</Link>
-
-
-                <Panel>
-                  <Route path="/user" component={User} />
-                  <Navigator path="/home" component={Home} />
-                </Panel>
-              </Panel>
-            </Router>
-          </div>
-        </div >
-      </Provider >
-
-
-      // <Provider store={store} >
-      //   <div>
-      //     <Panel>
-      //       <div className="App">
-      //         <Grid className="App-header">
-      //           <Row className="show-grid">
-      //             <Col xs={6} md={8} >
-      //               <h2>Welcome to RspectiveTaskValidator</h2>
-      //             </Col>
-      //             <Col xs={2} md={2}>
-      //               <img src={logo} className="icon-animation" alt="logo" />
-      //             </Col>
-
-      //           </Row>
-      //         </Grid >
-      //       </div>
-      //     </Panel>
-
-      //     <div>
-      //       <Router>
-      //         <Grid>
-      //           <Row>
-      //             <Panel>
-
-      //               <AppAlert />
-
-
-      //               <Col xs={6}>
-
-      //               </Col>
-      //               <Col xs={6}>
-      //                 <Link to="/home">Home</Link>
-      //                 <Link to="/user">Login</Link>
-      //               </Col>
-      //             </Panel>
-      //           </Row>
-      //           <Row>
-      //             <Panel>
-      //               <Route path="/user" component={User} />
-      //               <Navigator path="/home" component={Home} />
-      //             </Panel>
-      //           </Row>
-      //         </Grid >
-      //       </Router >
-      //     </div>
-      //   </div >
-      // </Provider >
+          <Navbar>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <img src={logo} className="icon-animation" alt="logo" />RspectiveTaskValidator
+              </Navbar.Brand>
+            </Navbar.Header>
+            <Nav>
+              <NavItem eventKey={1} href="/home">Home</NavItem>
+              <NavItem eventKey={2} href="/user">User</NavItem>
+            </Nav>
+          </Navbar>
+          <Router>
+            <Panel footer="Icon made by Freepik from www.flaticon.com ">
+              <AppAlert />
+              <Route path="/user" component={User} />
+              <Navigator path="/home" component={Home} />
+            </Panel>
+          </Router>
+        </div>
+      </Provider>
     );
   }
 }

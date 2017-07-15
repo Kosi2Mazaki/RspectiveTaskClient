@@ -5,8 +5,7 @@ import * as alertActions from '../Actions/alertActions'
 import { connect } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import { requestProxy } from '../appconfig'
-import history from '../appconfig'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 /**
  * Class responsible for user management.
@@ -138,8 +137,8 @@ class UserForm extends Component {
                     </p>
                     {
                         this.state.register ?
-                            <p className="message" onClick={this.toggleRegister.bind(this)}>Already registered? <a href="#">Sign In</a></p> :
-                            <p className="message" onClick={this.toggleRegister.bind(this)}>Not registered? <a href="#">Create an account</a></p>
+                            <p className="message" onClick={this.toggleRegister.bind(this)}>Already registered? <a>Sign In</a></p> :
+                            <p className="message" onClick={this.toggleRegister.bind(this)}>Not registered? <a>Create an account</a></p>
                     }
                 </Form >
             )
@@ -154,7 +153,7 @@ class UserForm extends Component {
                         onClick={() => this.props.onUserLogout()}>
                         Logout
                     </Button>
-                    <p className="message">You can now go to the <Link to="/home">Home</Link> page</p>
+                    <p className="extra-padding message">You can now go to the <Link to="/home">Home</Link> page</p>
                 </div>
             )
         }
