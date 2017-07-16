@@ -5,7 +5,7 @@ import axios from 'axios'
  * Global application configuration
  */
 export const APPCONFIG = {
-    SERVER: 'https://thawing-oasis-76386.herokuapp.com/'
+    SERVER: 'https://rspectivetasktestserver.herokuapp.com/'
     // SERVER: 'http://localhost:3003'
 }
 
