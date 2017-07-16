@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { requestProxy } from '../appconfig'
-import { Button, Modal, Panel, PanelGroup } from 'react-bootstrap'
+import { Button, Panel, PanelGroup } from 'react-bootstrap'
 import * as alertActions from '../Actions/alertActions'
 import * as taskActions from '../Actions/taskActions'
 import { connect } from 'react-redux'
@@ -50,21 +50,17 @@ class Home extends Component {
             <div className="modal-container">
                 <Panel header="Manage main tasks">
                     <Button
-                        onClick={this.createTask.bind(this, false)}
-                        disabled={!store.getState().tasks.dirty}
-                        className='small-add-button'> Refresh </Button>
-                    <Button
                         bsSize="small"
-                        disabled={store.getState().tasks.dirty}
                         onClick={this.createTask.bind(this, true)}
-                        className='small-add-button'> + </Button>
+                    > Add new task </Button>
                 </Panel>
                 <TaskForm />
                 <PanelGroup>
                     {
                         this.props.tasks.entries.map(function (elem, key) {
-                            {/* return <div key={key}>{elem.name}</div> */ }
-                            return <TaskDomElement key={key} element={elem} />
+                            if (elem.root) {
+                                return <TaskDomElement key={key} isDefaultOpen element={elem} />
+                            }
                         })
                     }
                 </PanelGroup>

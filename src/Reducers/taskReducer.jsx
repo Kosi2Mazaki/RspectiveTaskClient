@@ -14,7 +14,6 @@ export function visibilityFilter(state = SHOW_ALL, action) {
 const initialTaskState = {
     showForm: false,
     parentID: "",
-    dirty: false,
     entries: []
 }
 export function tasks(state = initialTaskState, action) {
@@ -28,13 +27,14 @@ export function tasks(state = initialTaskState, action) {
             return {
                 ...state,
                 entries: action.tasks,
-                dirty: false
             }
-        case taskActions.SET_DIRTY:
+        case taskActions.EXPAND_TASK:
             return {
                 ...state,
-                dirty: true,
-                parentID: ""
+                // entries: action.tasks.map(todo =>
+                //     (todo === action.task.id) ?
+                //         { ...todo, action.tasks.entry } : todo},
+                // dirty: false
             }
         case taskActions.SET_PARENT_ID:
             return {

@@ -6,23 +6,15 @@ import * as taskActions from '../Actions/taskActions'
 import { requestProxy } from '../appconfig'
 import * as alertActions from '../Actions/alertActions'
 import store from '../Reducers/appReducer'
+import * as commonActions from '../Actions/commonActions'
 
 class TaskForm extends Component {
 
     handleSubmit(newTaskFormData) {
-        if (store.getState().tasks.dirty) {
-            this.showMessage(
-                alertActions.AlertType.ERROR,
-                "The application is in dirty state. Please refresh!"
-            )
-            return
-        }
-
         var dispatcher = this.formDispatch;
         store.dispatch(taskActions.showForm(false))
         this.clearForm()
         if (store.getState().tasks.parentID) {
-            console.log("Subtask")
             this.createTask(newTaskFormData, "/" + store.getState().tasks.parentID)
         } else {
             this.createTask(newTaskFormData)
@@ -42,28 +34,19 @@ class TaskForm extends Component {
                 owner: this.props.user.username
             })
             .then(response => {
-                this.showMessage(
+                commonActions.showMessage(
                     alertActions.AlertType.Info,
                     "Task called '" + newTaskFormData.name + "' created successfully"
                 )
-                store.dispatch(taskActions.setDirty())
+
+                store.dispatch(taskActions.setParentID(""))
+                commonActions.fetchData()
             }).catch((error) => {
-                this.showMessage(
+                commonActions.showMessage(
                     alertActions.AlertType.ERROR,
                     error.response.status + ' (' + error.response.statusText + '): ' + error.response.data
                 )
             });
-    }
-
-    showMessage(type, message) {
-        store.dispatch(
-            alertActions.setType(
-                type
-            ));
-        store.dispatch(
-            alertActions.showAlert(
-                message
-            ));
     }
 
     /**

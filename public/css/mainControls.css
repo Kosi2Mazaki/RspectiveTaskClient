@@ -19,7 +19,18 @@ body {
   display: inline; }
 
 .small-add-button {
-  margin-right: 10px; }
+  width: 30px;
+  height: 30px;
+  float: left; }
+
+.add-top-padding {
+  padding-top: 5px; }
+
+.cross-text {
+  text-decoration: line-through; }
+
+.panel-group {
+  margin-bottom: 5px; }
 
 .icon-animation {
   height: 25px;
