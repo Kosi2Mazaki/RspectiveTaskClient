@@ -4,7 +4,7 @@ import './App.css'
 import Home from './Components/Home'
 import AppAlert from './Components/AppAlert'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { Panel, Navbar, Nav, NavItem } from 'react-bootstrap'
 import store from './Reducers/appReducer'
 import User from './Components/User'
@@ -12,19 +12,6 @@ import * as userActions from './Actions/userActions'
 import Navigator from './Components/Navigator'
 
 userActions.checkLocalStorage(store)
-
-
-// let next = store.dispatch
-// store.dispatch = function dispatchAndLog(action) {
-//   console.log('dispatching', action)
-//   let result = next(action)
-//   console.log('next state', store.getState())
-//   return result
-// }
-// let unsubscribe = store.subscribe(() =>
-//   console.log(store.getState())
-// );
-// unsubscribe();
 
 class App extends Component {
   render() {
@@ -46,7 +33,7 @@ class App extends Component {
             <Panel footer="Icon made by Freepik from www.flaticon.com ">
               <AppAlert />
               <Route path="/user" component={User} />
-              <Navigator path="/" component={Home} />
+              <Navigator exact path="/" component={Home} />
             </Panel>
           </Router>
         </div>

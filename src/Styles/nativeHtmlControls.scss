@@ -67,11 +67,11 @@
   font-size: 14px;
 }
 
-.panelBody input, .panelBody .input {
+.panelBody input, .panelBody .input, .modalBody input, .modalBody .input {
   @extend .basicElement
 }
 
-.panelBody button {
+.panelBody button , .modalBody button{
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -85,7 +85,8 @@
   transition: all 0.3 ease;
   cursor: pointer;
 }
-.panelBody button:hover,.panelBody button:active,.panelBody button:focus {
+.panelBody button:hover,.panelBody button:active,.panelBody button:focus,
+.modalBody button:hover,.modalBody button:active,.modalBody button:focus {
   background: #43A047;
 }
 

@@ -1,44 +1,82 @@
 import React, { Component } from 'react'
 import { requestProxy } from '../appconfig'
-import { Button } from 'react-bootstrap'
+import { Button, Modal, Panel, PanelGroup } from 'react-bootstrap'
 import * as alertActions from '../Actions/alertActions'
+import * as taskActions from '../Actions/taskActions'
 import { connect } from 'react-redux'
+import TaskForm from './TaskForm'
+import store from '../Reducers/appReducer'
+import TaskDomElement from './TaskDomElement'
 
 class Home extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: ["a", "b"]
-        }
-    }
-
     componentWillMount() {
-        // this.props.history.push('/')
+        this.fetchData()
     }
+
     fetchData() {
-        requestProxy.get('/tasks')
-            .then(function () {
+        requestProxy.get('/tasks', {
+            params: {
+                user: this.props.user.username,
+            }
+        }).then(response => {
+            store.dispatch(taskActions.storeTasks(response.data))
+        }).catch((error) => {
+            this.showMessage(
+                alertActions.AlertType.ERROR,
+                error.response.status + ' (' + error.response.statusText + '): ' + error.response.data
+            )
+        });
+    }
 
-            }).catch(function (error) {
-                console.log("ERROR")
+    createTask(doShow) {
+        this.props.showTagForm(doShow)
+        this.fetchData()
+    }
 
-                //         break;
-                // }
-            });
+    showMessage(type, message) {
+        store.dispatch(
+            alertActions.setType(
+                type
+            ));
+        store.dispatch(
+            alertActions.showAlert(
+                message
+            ));
     }
 
     render() {
         return (
-            <div>
-                <Button onClick={this.fetchData.bind(this)}> Fetch </Button>
-                {
-                    this.state.data.map((elem, i) => {
-                        return <div key={i}> {elem} </div>
-                    })
-                }
+            <div className="modal-container">
+                <Panel header="Manage main tasks">
+                    <Button
+                        onClick={this.createTask.bind(this, false)}
+                        disabled={!store.getState().tasks.dirty}
+                        className='small-add-button'> Refresh </Button>
+                    <Button
+                        bsSize="small"
+                        disabled={store.getState().tasks.dirty}
+                        onClick={this.createTask.bind(this, true)}
+                        className='small-add-button'> + </Button>
+                </Panel>
+                <TaskForm />
+                <PanelGroup>
+                    {
+                        this.props.tasks.entries.map(function (elem, key) {
+                            {/* return <div key={key}>{elem.name}</div> */ }
+                            return <TaskDomElement key={key} element={elem} />
+                        })
+                    }
+                </PanelGroup>
             </div >
         )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+        tasks: state.tasks
     }
 }
 
@@ -49,11 +87,14 @@ const mapDispatchToProps = dispatch => {
         },
         showAlert: (message) => {
             dispatch(alertActions.showAlert(message))
+        },
+        showTagForm: (doShow) => {
+            dispatch(taskActions.showForm(doShow))
         }
     }
 }
 
 export default connect(
-
+    mapStateToProps,
     mapDispatchToProps
 )(Home)

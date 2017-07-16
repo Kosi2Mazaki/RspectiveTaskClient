@@ -18,6 +18,9 @@ body {
 .navbar-brand > img {
   display: inline; }
 
+.small-add-button {
+  margin-right: 10px; }
+
 .icon-animation {
   height: 25px;
   margin-right: 5px;

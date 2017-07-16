@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import { requestProxy } from '../appconfig'
 import { Link } from 'react-router-dom'
+import store from '../Reducers/appReducer'
 
 /**
  * Class responsible for user management.
@@ -25,33 +26,32 @@ class UserForm extends Component {
      * @param {Object} user Object with user info
      */
     loginUser(user) {
-        var dispatcher = this.formDispatch;
         requestProxy.post('/authenticate',
             { name: user.username, password: user.password })
             .then(response => {
                 //save token and username
-                dispatcher(userActions.logInUser({
+                store.dispatch(userActions.logInUser({
                     username: user.username,
                     token: response.data
                 }));
                 // show info
-                dispatcher(
+                store.dispatch(
                     alertActions.setType(
                         alertActions.AlertType.INFO
                     ));
-                dispatcher(
+                store.dispatch(
                     alertActions.showAlert(
                         "You were successfully logged in."
                     ));
                 // clear form
-                dispatcher(actions.reset('userForm.username'))
-                dispatcher(actions.reset('userForm.password'))
+                store.dispatch(actions.reset('userForm.username'))
+                store.dispatch(actions.reset('userForm.password'))
             }).catch((error) => {
-                dispatcher(
+                store.dispatch(
                     alertActions.setType(
                         alertActions.AlertType.ERROR
                     ));
-                dispatcher(
+                store.dispatch(
                     alertActions.showAlert(
                         error.response.status + ' (' + error.response.statusText + '): ' + error.response.data
                     ));
@@ -62,31 +62,35 @@ class UserForm extends Component {
      * @param {Object} user Object with user info
      */
     registerUser(user) {
-        var dispatcher = this.formDispatch;
         requestProxy.post('/users',
             { name: user.username, password: user.password }).then(response => {
                 // show info
-                dispatcher(
+                store.dispatch(
                     alertActions.setType(
                         alertActions.AlertType.INFO
                     ));
-                dispatcher(
+                store.dispatch(
                     alertActions.showAlert(
                         "User successfully created. You can now Login"
                     ));
                 this.setState({ register: false })
-                dispatcher(actions.reset('userForm.username'))
-                dispatcher(actions.reset('userForm.password'))
+                store.dispatch(actions.reset('userForm.username'))
+                store.dispatch(actions.reset('userForm.password'))
             }).catch((error) => {
-                dispatcher(
-                    alertActions.setType(
-                        alertActions.AlertType.ERROR
-                    ));
-                dispatcher(
-                    alertActions.showAlert(
-                        error.response.status + ' (' + error.response.statusText + '): ' + error.response.data
-                    ));
+                this.showError(
+                    error.response.status + ' (' + error.response.statusText + '): ' + error.response.data)
             });
+    }
+
+    showError(message) {
+        store.dispatch(
+            alertActions.setType(
+                alertActions.AlertType.ERROR
+            ));
+        store.dispatch(
+            alertActions.showAlert(
+                message
+            ));
     }
 
     /**
@@ -121,7 +125,6 @@ class UserForm extends Component {
                 < Form
                     model="userForm"
                     className="panelBody"
-                    getDispatch={(dispatch) => this.attachDispatch(dispatch)}
                     onSubmit={(userForm) => this.handleSubmit(userForm, this.state.register)}>
                     <Control.text
                         placeholder="Username"

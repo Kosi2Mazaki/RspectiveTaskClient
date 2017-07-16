@@ -8,7 +8,7 @@
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); }
 
-.basicElement, .panelBody input, .panelBody .input {
+.basicElement, .panelBody input, .panelBody .input, .modalBody input, .modalBody .input {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
@@ -19,7 +19,7 @@
   box-sizing: border-box;
   font-size: 14px; }
 
-.panelBody button {
+.panelBody button, .modalBody button {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -33,7 +33,8 @@
   transition: all 0.3 ease;
   cursor: pointer; }
 
-.panelBody button:hover, .panelBody button:active, .panelBody button:focus {
+.panelBody button:hover, .panelBody button:active, .panelBody button:focus,
+.modalBody button:hover, .modalBody button:active, .modalBody button:focus {
   background: #43A047; }
 
 .register-form {
