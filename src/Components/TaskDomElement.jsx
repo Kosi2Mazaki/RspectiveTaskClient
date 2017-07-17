@@ -37,7 +37,7 @@ class TaskDomElement extends Component {
      * Used to create a subtask
      */
     createSubTask() {
-        store.dispatch(taskActions.setParentID(this.props.element._id))
+        store.dispatch(taskActions.setParentID(this.getObject()._id))
         store.dispatch(taskActions.showForm(true))
     }
 
@@ -88,12 +88,16 @@ class TaskDomElement extends Component {
             });
     }
 
-    render() {
-        var objToRender = (typeof this.props.element !== 'string') ?
+    getObject() {
+        return (typeof this.props.element !== 'string') ?
             this.props.element :
             store.getState().tasks.entries.filter((value) => {
                 return value._id === this.props.element
             })[0]
+    }
+
+    render() {
+        var objToRender = this.getObject()
         var allTasks = store.getState().tasks.entries
         // Get all tasks in progress -> will be on top
         var tasksInProgress = objToRender.subtasks.filter((element) => {
